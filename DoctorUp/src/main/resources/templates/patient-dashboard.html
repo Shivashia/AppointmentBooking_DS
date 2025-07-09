@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Patient Dashboard</title>
+  <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+        .btn-book { background-color: #28a745; color: white; padding: 5px 10px; border: none; cursor: pointer; }
+        .btn-book:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+
+<h1>Welcome, <span th:text="${patient.name}">Patient Name</span></h1>
+
+<h2>Your Appointments</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Doctor</th>
+    <th>Specialization</th>
+    <th>Date & Time</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="appt : ${appointments}">
+    <td th:text="${appt.doctor.name}">Doctor Name</td>
+    <td th:text="${appt.doctor.specialization}">Specialization</td>
+    <td th:text="${#temporals.format(appt.appointmentDateTime, 'yyyy-MM-dd HH:mm')}">Date</td>
+    <td th:text="${appt.status}">Status</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Available Doctors</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Specialization</th>
+    <th>Book</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="doc : ${doctors}">
+    <td th:text="${doc.name}">Doctor Name</td>
+    <td th:text="${doc.specialization}">Specialization</td>
+    <td>
+      <form th:action="@{/appointments/book}" method="post">
+        <input type="hidden" name="doctorId" th:value="${doc.id}" />
+        <input type="hidden" name="patientId" th:value="${patient.id}" />
+        <input type="datetime-local" name="appointmentDate" required />
+        <button type="submit" class="btn-book">Book</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

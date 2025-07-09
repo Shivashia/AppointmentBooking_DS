@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Doctor Dashboard</title>
+  <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        .dashboard-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <h1>Welcome, Dr. <span th:text="${doctor.name}">Doctor Name</span></h1>
+  <p>Email: <span th:text="${doctor.email}">doctor@example.com</span></p>
+  <p>Specialization: <span th:text="${doctor.specialization}">Specialization</span></p>
+
+  <!-- Future sections: list of appointments, actions, etc. -->
+</div>
+
+</body>
+</html>
