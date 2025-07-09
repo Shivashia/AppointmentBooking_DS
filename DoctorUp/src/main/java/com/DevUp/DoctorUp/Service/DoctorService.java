@@ -59,8 +59,9 @@ public class DoctorService {
     public DoctorDTO getDoctorByEmail(String token, String email){
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
-        HttpEntity<Void> entity = new HttpEntity<>(headers);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
         System.out.println("doctor Email: "+email);
         ResponseEntity<DoctorDTO> response = restTemplate.exchange(
                 doctorServiceUrl + "/doctor/email/" + email,
