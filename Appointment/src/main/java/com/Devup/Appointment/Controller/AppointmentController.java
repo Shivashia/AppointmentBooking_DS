@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import java.util.stream.Collectors;
@@ -107,5 +109,14 @@ public class AppointmentController {
         String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
         patientApp=appointmentService.getAppointmentsForPatient(id,token);
         return patientApp;
+    }
+
+    @GetMapping("/getDoctorAppointment/{id}")
+    private List<AppointmentResponseDTO> getDoctorAppointments(@PathVariable int id,@RequestHeader("Authorization") String authHeader){
+        List<AppointmentResponseDTO> doctorApp=new ArrayList<>();
+        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
+        doctorApp=appointmentService.getAppointmentsForDoctor(id,token);
+        System.out.println(""+doctorApp.size()+ Arrays.toString(doctorApp.toArray()));
+        return doctorApp;
     }
 }

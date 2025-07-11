@@ -40,6 +40,7 @@ public class AppointmentServiceImpl {
                 .status(AppointmentStatus.PENDING)
                 .build();
 
+
         Appointment saved = repository.save(appointment);
         return mapToDTO(saved,token);
     }

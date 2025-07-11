@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class DoctorService {
     private String doctorServiceUrl;
 
     private final RestTemplate restTemplate;
+
+    private String appointmentServiceURL="http://APPOINTMENT-SERVICE";
 
     public DoctorService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -69,17 +72,25 @@ public class DoctorService {
                 entity,
                 DoctorDTO.class
         );
-//        String encodedEmail = URLEncoder.encode(email, StandardCharsets.UTF_8);
-//        String url = doctorServiceUrl + "/doctor/email/" + encodedEmail;
-//
-//        ResponseEntity<DoctorDTO> response = restTemplate.exchange(
-//                url,
-//                HttpMethod.GET,
-//                entity,
-//                DoctorDTO.class
-//        );
-        System.out.println("REsponse entity: "+response.getBody().getEmail());
+        System.out.println("Response entity: "+response.getBody().getEmail());
 
         return response.getBody();
+    }
+
+    public List<AppointmentDetailsDTO> getDoctorAppointments(int id, String token) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<AppointmentDetailsDTO[]> response = restTemplate.exchange(
+                appointmentServiceURL + "/appointments/getDoctorAppointment/" + id,
+                HttpMethod.GET,
+                requestEntity,
+                AppointmentDetailsDTO[].class
+        );
+        System.out.println("Details: "+response.getBody());
+        return Arrays.asList(response.getBody());
     }
 }

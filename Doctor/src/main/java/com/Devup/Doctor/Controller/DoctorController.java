@@ -82,13 +82,18 @@ public class DoctorController {
         return service.getAll();
     }
 
-    @GetMapping(value="/email/{email}")
-    public ResponseEntity<DoctorDTO> getDoctorByEmail(@PathVariable String email){
-        Doctor doctor=repository.findByEmail(email).orElseThrow(
-                ()-> new UsernameNotFoundException("Invalid Username or password"));
-        DoctorDTO newDoc=new DoctorDTO(doctor.getId(), doctor.getName(), doctor.getSpecialization(), doctor.getEmail());
-        System.out.println(newDoc.toString());
-        return  ResponseEntity.ok(newDoc);
+    @GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DoctorDTO> getDoctorByEmail(@PathVariable String email) {
+        Doctor doctor = repository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Invalid Username or password"));
+        DoctorDTO nDoc=new DoctorDTO();
+        nDoc.setId(doctor.getId());
+        nDoc.setEmail(doctor.getEmail());
+        nDoc.setSpecialization(doctor.getSpecialization());
+        nDoc.setName(doctor.getName());
+        System.out.println(nDoc);
+//        DoctorDTO newDoc = new DoctorDTO(doctor.getId(), doctor.getName(), doctor.getSpecialization(), doctor.getEmail());
+        return ResponseEntity.ok().body(nDoc);
     }
 
 }

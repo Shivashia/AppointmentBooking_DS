@@ -8,14 +8,15 @@ import com.DevUp.DoctorUp.Service.AuthService;
 import com.DevUp.DoctorUp.Service.DoctorService;
 import com.DevUp.DoctorUp.Service.PatientService;
 //import com.Devup.Appointment.DTO.PatientDTO;
-import com.Devup.Appointment.DTO.AppointmentResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -37,11 +38,20 @@ public class HomeController {
     @Autowired
     private AuthService authService;
 
+    private String appointmentServiceUrl="http://APPOINTMENT-SERVICE";
+
+
+    private final RestTemplate restTemplate;
+
     @Autowired
     private AppointmentService appointmentService;
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    public HomeController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @GetMapping({"/", "/home"})
     public String getHome(){
@@ -190,8 +200,49 @@ public class HomeController {
 
         DoctorDTO getDoctor=doctorService.getDoctorByEmail(token,email);
         model.addAttribute("doctor",getDoctor);
+
+
+        List<AppointmentDetailsDTO> rawAppointments = doctorService.getDoctorAppointments(getDoctor.getId(), token);
+        model.addAttribute("appointments",rawAppointments);
         return "doctor-dashboard";
     }
+
+    @PostMapping("/appointment/approve")
+    public String approveAppointment(@RequestParam("id") int appointmentId, HttpSession session) {
+        String token = (String) session.getAttribute("TOKEN");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        restTemplate.exchange(
+                appointmentServiceUrl+"/appointments/" + appointmentId + "/approve", // APPOINTMENT-SERVICE URL
+                HttpMethod.PUT,
+                entity,
+                Void.class
+        );
+
+        return "redirect:/dashboard/doctor";
+    }
+
+    @PostMapping("/appointment/reject")
+    public String rejectAppointment(@RequestParam("id") int appointmentId, HttpSession session) {
+        String token = (String) session.getAttribute("TOKEN");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        restTemplate.exchange(
+                appointmentServiceUrl+"/appointments/" + appointmentId + "/reject",
+                HttpMethod.PUT,
+                entity,
+                Void.class
+        );
+
+        return "redirect:/dashboard/doctor";
+    }
+
 
 
 }
