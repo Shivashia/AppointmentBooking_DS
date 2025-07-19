@@ -1,23 +1,139 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Doctor Dashboard</title>
+  <meta charset="UTF-8">
+  <title>Doctor Dashboard - MediConnect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .dashboard-container { background: #f9f9f9; padding: 20px; border-radius: 10px; max-width: 800px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
-        button { margin-right: 5px; }
-    </style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      color: #2d3748;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .dashboard-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 40px;
+      margin-bottom: 10px;
+      color: #4a5568;
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 5px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      background-color: #edf2f7;
+      font-weight: 600;
+      text-align: left;
+      color: #4a5568;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-right: 8px;
+    }
+
+    .btn-approve {
+      background-color: #38a169;
+      color: white;
+    }
+
+    .btn-reject {
+      background-color: #e53e3e;
+      color: white;
+    }
+
+    .btn[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .logout-link {
+      display: inline-block;
+      margin-top: 30px;
+      color: #4a5568;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .logout-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 25px;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
+
 <div class="dashboard-container">
   <h1>Welcome, Dr. <span th:text="${doctor.name}">Doctor Name</span></h1>
   <p>Email: <span th:text="${doctor.email}">doctor@example.com</span></p>
   <p>Specialization: <span th:text="${doctor.specialization}">Specialization</span></p>
 
   <h2>Appointments</h2>
-  <table border="1">
+  <table>
     <thead>
     <tr>
       <th>Patient Name</th>
@@ -34,21 +150,19 @@
       <td>
         <form th:action="@{/appointment/approve}" method="post" style="display:inline;">
           <input type="hidden" name="id" th:value="${appointment.id}" />
-          <button type="submit" th:disabled="${appointment.status != 'PENDING'}">Approve</button>
+          <button type="submit" class="btn btn-approve" th:disabled="${appointment.status != 'PENDING'}">Approve</button>
         </form>
         <form th:action="@{/appointment/reject}" method="post" style="display:inline;">
           <input type="hidden" name="id" th:value="${appointment.id}" />
-          <button type="submit" th:disabled="${appointment.status != 'PENDING'}">Reject</button>
+          <button type="submit" class="btn btn-reject" th:disabled="${appointment.status != 'PENDING'}">Reject</button>
         </form>
       </td>
     </tr>
     </tbody>
   </table>
 
+  <a href="/logout" class="logout-link">← Log out</a>
 </div>
+
 </body>
-
-
 </html>
-
-

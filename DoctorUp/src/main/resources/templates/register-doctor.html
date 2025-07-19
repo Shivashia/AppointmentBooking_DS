@@ -1,16 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Register Doctor</title>
+  <meta charset="UTF-8">
+  <title>Register Doctor - MediConnect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2d3748;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      margin-top: 5px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    @media (max-width: 480px) {
+      .form-card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-<h2>Doctor Registration</h2>
-<form method="post" th:action="@{/register/doctor}" th:object="${doctor}">
-  <label>Name:</label><input type="text" th:field="*{name}" /><br/>
-  <label>Email:</label><input type="email" th:field="*{email}" /><br/>
-  <label>Specialization:</label><input type="text" th:field="*{specialization}" /><br/>
-  <label>Password:</label><input type="password" th:field="*{password}" /><br/>
-  <button type="submit">Register</button>
-</form>
+
+<div class="form-card">
+  <h2>Doctor Registration</h2>
+  <form method="post" th:action="@{/register/doctor}" th:object="${doctor}">
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}" id="name" required />
+
+    <label for="email">Email:</label>
+    <input type="email" th:field="*{email}" id="email" required />
+
+    <label for="specialization">Specialization:</label>
+    <input type="text" th:field="*{specialization}" id="specialization" required />
+
+    <label for="password">Password:</label>
+    <input type="password" th:field="*{password}" id="password" required />
+
+    <button type="submit">Register</button>
+  </form>
+</div>
+
 </body>
 </html>

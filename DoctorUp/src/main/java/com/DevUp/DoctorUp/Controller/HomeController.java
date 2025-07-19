@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -91,6 +92,8 @@ public class HomeController {
         return "login";
     }
 
+
+
     @PostMapping("/login")
     public String processLogin(@ModelAttribute LoginDTO loginDTO,
                                @RequestParam String role,
@@ -115,6 +118,15 @@ public class HomeController {
             model.addAttribute("error", "Invalid credentials or service unavailable");
             return "login";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();//removes everything from session
+        }
+        return "home";
     }
 
     @GetMapping("/dashboard/patient")

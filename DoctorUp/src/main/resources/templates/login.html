@@ -1,27 +1,144 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Login</title>
+  <meta charset="UTF-8">
+  <title>MediConnect - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2d3748;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin: 15px 0 5px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .radio-group {
+      margin-top: 10px;
+    }
+
+    .radio-group input {
+      margin-right: 8px;
+    }
+
+    .radio-group label {
+      display: inline-block;
+      margin-right: 20px;
+      font-weight: normal;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .logout-link {
+      display: block;
+      margin-top: 25px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      text-decoration: none;
+    }
+
+    .logout-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-<h2>Welcome</h2>
-<form method="post" th:action="@{/login}" th:object="${user}">
-  <div th:if="${error}" style="color:red;">
-    <p th:text="${error}"></p>
-  </div>
 
-  <label>Email:</label>
-  <input type="email" th:field="*{email}" required/><br/>
+<div class="login-card">
+  <h2>Welcome to MediConnect</h2>
 
-  <label>Password:</label>
-  <input type="password" th:field="*{password}" required/><br/>
+  <form method="post" th:action="@{/login}" th:object="${user}">
+    <div th:if="${error}" class="error-message">
+      <p th:text="${error}"></p>
+    </div>
 
-  <label>Role:</label><br/>
-  <input type="radio" name="role" value="PATIENT" checked/> Patient<br/>
-  <input type="radio" name="role" value="DOCTOR"/> Doctor<br/><br/>
+    <label for="email">Email</label>
+    <input type="email" th:field="*{email}" id="email" required />
 
-  <button type="submit">Login</button>
-</form>
+    <label for="password">Password</label>
+    <input type="password" th:field="*{password}" id="password" required />
+
+    <label>Role</label>
+    <div class="radio-group">
+      <input type="radio" name="role" value="PATIENT" checked id="role-patient" />
+      <label for="role-patient">Patient</label>
+
+      <input type="radio" name="role" value="DOCTOR" id="role-doctor" />
+      <label for="role-doctor">Doctor</label>
+    </div>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <a href="/home" class="logout-link">← Back to Home</a>
+</div>
 
 </body>
 </html>
