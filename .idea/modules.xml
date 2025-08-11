@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Appointment/Appointment.iml" filepath="$PROJECT_DIR$/Appointment/Appointment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AuthService/AuthService.iml" filepath="$PROJECT_DIR$/AuthService/AuthService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Doctor/Doctor.iml" filepath="$PROJECT_DIR$/Doctor/Doctor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DoctorUp/DoctorUp.iml" filepath="$PROJECT_DIR$/DoctorUp/DoctorUp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EurekaServer/EurekaServer.iml" filepath="$PROJECT_DIR$/EurekaServer/EurekaServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Patient/Patient.iml" filepath="$PROJECT_DIR$/Patient/Patient.iml" />
+    </modules>
+  </component>
+</project>
