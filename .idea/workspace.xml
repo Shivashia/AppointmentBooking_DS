@@ -13,8 +13,18 @@
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -36,14 +46,22 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/ASUS/OneDrive/Desktop/COMP/PROJECTS/AppointmentBooking/AppointmentBooking_DS/Patient/pom.xml",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "last_opened_file_path": "C:/Users/ASUS/OneDrive/Desktop/COMP/PROJECTS/AppointmentBooking/AppointmentBooking_DS/Appointment/src/main/java/com/Devup/Appointment/Service",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "MTConfigurable"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.DoctorUpApplication">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ASUS\OneDrive\Desktop\COMP\PROJECTS\AppointmentBooking\AppointmentBooking_DS\Appointment\src\main\java\com\Devup\Appointment\Service" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.Devup.Appointment.Service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.NotificationServiceApplication">
     <configuration name="AppointmentApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Devup.Appointment.AppointmentApplication" />
       <module name="Appointment" />
@@ -96,12 +114,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PatientApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.Devup.Patient.PatientApplication" />
-      <module name="Patient" />
+    <configuration name="NotificationServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.DevUp.NotificationService.NotificationServiceApplication" />
+      <module name="NotificationService" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.Devup.Patient.*" />
+          <option name="PATTERN" value="com.DevUp.NotificationService.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -111,11 +129,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.NotificationServiceApplication" />
+        <item itemvalue="Application.AppointmentApplication" />
         <item itemvalue="Application.DoctorUpApplication" />
         <item itemvalue="Application.AuthServiceApplication" />
-        <item itemvalue="Application.AppointmentApplication" />
         <item itemvalue="Application.DoctorApplication" />
-        <item itemvalue="Application.PatientApplication" />
       </list>
     </recent_temporary>
   </component>

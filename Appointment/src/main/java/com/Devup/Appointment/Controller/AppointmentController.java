@@ -5,6 +5,8 @@ import com.Devup.Appointment.Entity.Appointment;
 import com.Devup.Appointment.Entity.AppointmentStatus;
 import com.Devup.Appointment.Repository.AppointmentRepository;
 
+import com.Devup.Appointment.Service.AppointmentEvent;
+import com.Devup.Appointment.Service.AppointmentEventPublisher;
 import com.Devup.Appointment.Service.AppointmentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class AppointmentController {
     @Autowired
     private AppointmentServiceImpl appointmentService;
 
+    @Autowired
+    private AppointmentEventPublisher eventPublisher;
+
 
     @PostMapping("/register")
     public ResponseEntity<Appointment> createAppointment(@RequestBody AppointmentRequestDTO dto) {
@@ -45,7 +50,19 @@ public class AppointmentController {
         appointment.setPatientId(dto.getPatientId());
         appointment.setAppointmentDateTime(dto.getAppointmentDateTime());
         appointment.setStatus(AppointmentStatus.PENDING);
-        return ResponseEntity.ok(appointmentRepository.save(appointment));
+        Appointment saved = appointmentRepository.save(appointment);
+
+        // Publish NEW_APPOINTMENT event
+        eventPublisher.sendEvent(new AppointmentEvent(
+                saved.getId(),
+                saved.getDoctorId(),
+                saved.getPatientId(),
+                saved.getStatus().name(),
+                saved.getAppointmentDateTime()
+        ));
+
+        return ResponseEntity.ok(saved);
+
     }
 
 
@@ -74,6 +91,14 @@ public class AppointmentController {
                 .orElseThrow(() -> new RuntimeException("Appointment not found"));
         appointment.setStatus(AppointmentStatus.APPROVED);
         appointmentRepository.save(appointment);
+
+        eventPublisher.sendEvent(new AppointmentEvent(
+                appointment.getId(),
+                appointment.getDoctorId(),
+                appointment.getPatientId(),
+                appointment.getStatus().name(),
+                appointment.getAppointmentDateTime()
+        ));
         return ResponseEntity.ok("Appointment approved");
     }
 
@@ -84,6 +109,16 @@ public class AppointmentController {
                 .orElseThrow(() -> new RuntimeException("Appointment not found"));
         appointment.setStatus(AppointmentStatus.REJECTED);
         appointmentRepository.save(appointment);
+
+        // Publish REJECTED event
+        eventPublisher.sendEvent(new AppointmentEvent(
+                appointment.getId(),
+                appointment.getDoctorId(),
+                appointment.getPatientId(),
+                appointment.getStatus().name(),
+                appointment.getAppointmentDateTime()
+        ));
+
         return ResponseEntity.ok("Appointment rejected");
     }
     private AppointmentDetailsDTO mapToDetailsDTO(Appointment appointment) {

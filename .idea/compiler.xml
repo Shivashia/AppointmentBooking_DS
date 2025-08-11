@@ -10,9 +10,10 @@
         <module name="EurekaServer" />
         <module name="Appointment" />
         <module name="DoctorUp" />
+        <module name="NotificationService" />
         <module name="AuthService" />
       </profile>
-      <profile name="Annotation profile for Doctor" enabled="true">
+      <profile name="Annotation profile for Patient" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -29,6 +30,7 @@
       <module name="Doctor" target="17" />
       <module name="DoctorUp" target="17" />
       <module name="EurekaServer" target="17" />
+      <module name="NotificationService" target="17" />
       <module name="Patient" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -39,6 +41,7 @@
       <module name="Doctor" options="-parameters" />
       <module name="DoctorUp" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
+      <module name="NotificationService" options="-parameters" />
       <module name="Patient" options="-parameters" />
     </option>
   </component>
