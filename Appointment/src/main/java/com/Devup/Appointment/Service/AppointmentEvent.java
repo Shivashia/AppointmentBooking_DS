@@ -16,4 +16,5 @@ public class AppointmentEvent implements Serializable {
     private int patientId;
     private String status;  // PENDING, APPROVED, REJECTED
     private LocalDateTime appointmentDateTime;
+    private String token;
 }

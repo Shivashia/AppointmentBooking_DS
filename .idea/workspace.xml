@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f9e89cee-dba1-461e-ab2b-714001910963" name="Changes" comment="" />
+    <list default="true" id="f9e89cee-dba1-461e-ab2b-714001910963" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_mail_jakarta_mail_1_6_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_mail_2_5_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Controller/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Controller/AppointmentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Service/AppointmentEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Service/AppointmentEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NotificationService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NotificationService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,6 +50,9 @@
     <option name="version" value="2" />
   </component>
   <component name="ProjectId" id="3180DiR7EvJC2Nm0Sm44UTpuTaC" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -46,6 +61,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "C:/Users/ASUS/OneDrive/Desktop/COMP/PROJECTS/AppointmentBooking/AppointmentBooking_DS/Appointment/src/main/java/com/Devup/Appointment/Service",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
@@ -130,9 +146,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.NotificationServiceApplication" />
-        <item itemvalue="Application.AppointmentApplication" />
         <item itemvalue="Application.DoctorUpApplication" />
         <item itemvalue="Application.AuthServiceApplication" />
+        <item itemvalue="Application.AppointmentApplication" />
         <item itemvalue="Application.DoctorApplication" />
       </list>
     </recent_temporary>

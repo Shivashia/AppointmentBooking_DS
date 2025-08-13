@@ -13,7 +13,7 @@
         <module name="NotificationService" />
         <module name="AuthService" />
       </profile>
-      <profile name="Annotation profile for Patient" enabled="true">
+      <profile name="Annotation profile for Doctor" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

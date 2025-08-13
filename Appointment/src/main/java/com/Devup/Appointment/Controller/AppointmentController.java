@@ -44,7 +44,7 @@ public class AppointmentController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<Appointment> createAppointment(@RequestBody AppointmentRequestDTO dto) {
+    public ResponseEntity<Appointment> createAppointment(@RequestBody AppointmentRequestDTO dto ,@RequestHeader("Authorization") String authHeader) {
         Appointment appointment = new Appointment();
         appointment.setDoctorId(dto.getDoctorId());
         appointment.setPatientId(dto.getPatientId());
@@ -52,13 +52,16 @@ public class AppointmentController {
         appointment.setStatus(AppointmentStatus.PENDING);
         Appointment saved = appointmentRepository.save(appointment);
 
-        // Publish NEW_APPOINTMENT event
+        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
+
+        // ✅ Publish event with token
         eventPublisher.sendEvent(new AppointmentEvent(
                 saved.getId(),
                 saved.getDoctorId(),
                 saved.getPatientId(),
                 saved.getStatus().name(),
-                saved.getAppointmentDateTime()
+                saved.getAppointmentDateTime(),
+                token
         ));
 
         return ResponseEntity.ok(saved);
@@ -86,37 +89,41 @@ public class AppointmentController {
 
 
     @PutMapping("/{id}/approve")
-    public ResponseEntity<String> approveAppointment(@PathVariable int id) {
+    public ResponseEntity<String> approveAppointment(@PathVariable int id,@RequestHeader("Authorization") String authHeader) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Appointment not found"));
         appointment.setStatus(AppointmentStatus.APPROVED);
         appointmentRepository.save(appointment);
 
+
+        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
         eventPublisher.sendEvent(new AppointmentEvent(
                 appointment.getId(),
                 appointment.getDoctorId(),
                 appointment.getPatientId(),
                 appointment.getStatus().name(),
-                appointment.getAppointmentDateTime()
+                appointment.getAppointmentDateTime(),
+                token
         ));
         return ResponseEntity.ok("Appointment approved");
     }
 
 
     @PutMapping("/{id}/reject")
-    public ResponseEntity<String> rejectAppointment(@PathVariable int id) {
+    public ResponseEntity<String> rejectAppointment(@PathVariable int id,@RequestHeader("Authorization") String authHeader) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Appointment not found"));
         appointment.setStatus(AppointmentStatus.REJECTED);
         appointmentRepository.save(appointment);
 
-        // Publish REJECTED event
+        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
         eventPublisher.sendEvent(new AppointmentEvent(
                 appointment.getId(),
                 appointment.getDoctorId(),
                 appointment.getPatientId(),
                 appointment.getStatus().name(),
-                appointment.getAppointmentDateTime()
+                appointment.getAppointmentDateTime(),
+                token
         ));
 
         return ResponseEntity.ok("Appointment rejected");
