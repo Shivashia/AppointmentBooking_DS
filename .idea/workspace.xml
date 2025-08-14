@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f9e89cee-dba1-461e-ab2b-714001910963" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DoctorUp/src/main/resources/templates/register-doctor.html" beforeDir="false" afterPath="$PROJECT_DIR$/DoctorUp/src/main/resources/templates/register-doctor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DoctorUp/src/main/resources/templates/register-patient.html" beforeDir="false" afterPath="$PROJECT_DIR$/DoctorUp/src/main/resources/templates/register-patient.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NotificationService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Service/EmailService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +23,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -49,18 +52,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS/OneDrive/Desktop/COMP/PROJECTS/AppointmentBooking/AppointmentBooking_DS/Appointment/src/main/java/com/Devup/Appointment/Service&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MTConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/ASUS/OneDrive/Desktop/COMP/PROJECTS/AppointmentBooking/AppointmentBooking_DS/Appointment/src/main/java/com/Devup/Appointment/Service",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MTConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ASUS\OneDrive\Desktop\COMP\PROJECTS\AppointmentBooking\AppointmentBooking_DS\Appointment\src\main\java\com\Devup\Appointment\Service" />
@@ -69,7 +73,7 @@
       <recent name="com.Devup.Appointment.Service" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.NotificationServiceApplication">
+  <component name="RunManager" selected="Application.DoctorUpApplication">
     <configuration name="AppointmentApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Devup.Appointment.AppointmentApplication" />
       <module name="Appointment" />
@@ -137,8 +141,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.NotificationServiceApplication" />
         <item itemvalue="Application.DoctorUpApplication" />
+        <item itemvalue="Application.NotificationServiceApplication" />
         <item itemvalue="Application.AuthServiceApplication" />
         <item itemvalue="Application.AppointmentApplication" />
         <item itemvalue="Application.DoctorApplication" />
