@@ -5,11 +5,12 @@
       <list>
         <option value="$PROJECT_DIR$/EurekaServer/pom.xml" />
         <option value="$PROJECT_DIR$/Appointment/pom.xml" />
-        <option value="$PROJECT_DIR$/AuthService/pom.xml" />
         <option value="$PROJECT_DIR$/Doctor/pom.xml" />
         <option value="$PROJECT_DIR$/DoctorUp/pom.xml" />
         <option value="$PROJECT_DIR$/Patient/pom.xml" />
         <option value="$PROJECT_DIR$/NotificationService/pom.xml" />
+        <option value="$PROJECT_DIR$/UserService/pom.xml" />
+        <option value="$PROJECT_DIR$/AuthService/pom.xml" />
       </list>
     </option>
   </component>

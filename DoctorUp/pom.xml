@@ -70,18 +70,18 @@
 			<version>1.18.30</version> <!-- ✅ Use 1.18.30 or newer -->
 			<scope>provided</scope>
 		</dependency>
-        <dependency>
-            <groupId>com.Devup</groupId>
-            <artifactId>Appointment</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.Devup</groupId>
-            <artifactId>Patient</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.Devup</groupId>-->
+<!--            <artifactId>Appointment</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.Devup</groupId>-->
+<!--            <artifactId>Patient</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
     </dependencies>
 	<dependencyManagement>
 		<dependencies>

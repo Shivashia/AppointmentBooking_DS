@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+  eureka-server:
+    build: ./EurekaServer
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - booking-net
+
+  activemq:
+    image: rmohr/activemq
+    container_name: activemq
+    ports:
+      - "61616:61616"   # JMS
+      - "8161:8161"     # Web Console
+    networks:
+      - booking-net
+
+  appointment-service:
+    build: ./Appointment
+    container_name: appointment-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - eureka-server
+      - activemq
+    networks:
+      - booking-net
+
+  doctor-service:
+    build: ./Doctor
+    container_name: doctor-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+    networks:
+      - booking-net
+
+  patient-service:
+    build: ./Patient
+    container_name: patient-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+    networks:
+      - booking-net
+
+  auth-service:
+    build: ./AuthService
+    container_name: auth-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+    networks:
+      - booking-net
+
+  notification-service:
+    build: ./NotificationService
+    container_name: notification-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      - eureka-server
+      - activemq
+    networks:
+      - booking-net
+
+  doctorup-service:
+    build: ./DoctorUp
+    container_name: doctorup-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+    networks:
+      - booking-net
+
+networks:
+  booking-net:
+    driver: bridge
