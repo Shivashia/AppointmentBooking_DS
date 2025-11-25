@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/EurekaServer/EurekaServer.iml" filepath="$PROJECT_DIR$/EurekaServer/EurekaServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/NotificationService/NotificationService.iml" filepath="$PROJECT_DIR$/NotificationService/NotificationService.iml" />
       <module fileurl="file://$PROJECT_DIR$/Patient/Patient.iml" filepath="$PROJECT_DIR$/Patient/Patient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UserService/UserService.iml" filepath="$PROJECT_DIR$/UserService/UserService.iml" />
     </modules>
   </component>
 </project>

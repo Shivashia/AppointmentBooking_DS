@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Register Patient - MediConnect</title>
+  <title>Patient Registration - MediConnect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Google Font -->
@@ -49,7 +49,9 @@
 
     input[type="text"],
     input[type="email"],
-    input[type="password"] {
+    input[type="password"],
+    input[type="number"],
+    select {
       width: 100%;
       padding: 10px 14px;
       border-radius: 10px;
@@ -76,30 +78,40 @@
       transform: scale(1.03);
       box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
     }
-
-    @media (max-width: 480px) {
-      .form-card {
-        padding: 30px 20px;
-      }
-    }
   </style>
 </head>
 <body>
 
 <div class="form-card">
   <h2>Patient Registration</h2>
+
   <form method="post" th:action="@{/register/patient}" th:object="${patient}">
+
     <label for="name">Name:</label>
     <input type="text" th:field="*{name}" id="name" required />
 
     <label for="email">Email:</label>
     <input type="email" th:field="*{email}" id="email" required />
 
+    <label for="phone">Phone:</label>
+    <input type="text" th:field="*{phone}" id="phone" required />
+
+    <label for="age">Age:</label>
+    <input type="number" th:field="*{age}" id="age" min="1" required />
+
+    <label for="gender">Gender:</label>
+    <select th:field="*{gender}" id="gender" required>
+      <option value="" disabled selected>Select gender</option>
+      <option value="MALE">Male</option>
+      <option value="FEMALE">Female</option>
+      <option value="OTHER">Other</option>
+    </select>
+
     <label for="password">Password:</label>
     <input type="password" th:field="*{password}" id="password" required />
 
-    <label for="phone">Phone:</label>
-    <input type="text" th:field="*{phone}" id="phone" required />
+    <!-- Hidden default role -->
+    <input type="hidden" th:field="*{role}" value="PATIENT" />
 
     <button type="submit">Register</button>
   </form>

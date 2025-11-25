@@ -3,10 +3,7 @@ package com.DevUp.DoctorUp.Controller;
 
 import com.DevUp.DoctorUp.Config.JwtUtil;
 import com.DevUp.DoctorUp.DTO.*;
-import com.DevUp.DoctorUp.Service.AppointmentService;
-import com.DevUp.DoctorUp.Service.AuthService;
-import com.DevUp.DoctorUp.Service.DoctorService;
-import com.DevUp.DoctorUp.Service.PatientService;
+import com.DevUp.DoctorUp.Service.*;
 //import com.Devup.Appointment.DTO.PatientDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,6 +36,9 @@ public class HomeController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private UserServiceClient userServiceClient;
+
     private String appointmentServiceUrl="http://APPOINTMENT-SERVICE";
 
 
@@ -67,8 +67,19 @@ public class HomeController {
     }
 
     @PostMapping("/register/patient")
-    public String patientRegistered(@ModelAttribute RegisterPatientDTO patientDTO){
-        System.out.println(patientService.registerPatient(patientDTO));
+    public String patientRegistered(@ModelAttribute RegisterPatientDTO registerPatientDTO) {
+
+        UserRegistrationDTO dto = new UserRegistrationDTO();
+        dto.setName(registerPatientDTO.getName());
+        dto.setEmail(registerPatientDTO.getEmail());
+        dto.setPassword(registerPatientDTO.getPassword());
+        dto.setPhone(registerPatientDTO.getPhone());
+        dto.setAge(registerPatientDTO.getAge());
+        dto.setGender(registerPatientDTO.getGender());
+        dto.setRole("PATIENT");
+
+        userServiceClient.registerUser(dto);
+
         return "home";
     }
 
@@ -80,8 +91,17 @@ public class HomeController {
     }
 
     @PostMapping("/register/doctor")
-    public String doctorRegistered(@ModelAttribute RegisterDoctorDTO registerDoctorDTO){
-        System.out.println(doctorService.registerDoctor(registerDoctorDTO));
+    public String doctorRegistered(@ModelAttribute RegisterDoctorDTO registerDoctorDTO) {
+
+        UserRegistrationDTO dto = new UserRegistrationDTO();
+        dto.setName(registerDoctorDTO.getName());
+        dto.setEmail(registerDoctorDTO.getEmail());
+        dto.setPassword(registerDoctorDTO.getPassword());
+        dto.setSpecialization(registerDoctorDTO.getSpecialization());
+        dto.setRole("DOCTOR");
+        System.out.println("Sending to user Service");
+        userServiceClient.registerUser(dto);
+
         return "home";
     }
 

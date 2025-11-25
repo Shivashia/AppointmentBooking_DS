@@ -12,14 +12,13 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class RegisterPatientDTO {
 
-    @NotBlank
     private String name;
-    @Email
     private String email;
-    @NumberFormat
     private String phone;
-    @Size(min = 6)
     private String password;
+    private int age;
+    private String gender;
+    private String role="PATIENT";
 
     public String getName() {
         return name;
@@ -51,5 +50,29 @@ public class RegisterPatientDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

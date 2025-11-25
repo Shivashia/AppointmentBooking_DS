@@ -39,7 +39,7 @@ public class PatientService {
 
     public String registerPatient(RegisterPatientDTO patientDTO) {
         RegisterPatientDTO registeredPatient = restTemplate.postForObject(
-                patientServiceUrl + "/patient/register", patientDTO, RegisterPatientDTO.class);
+                patientServiceUrl + "/auth/register", patientDTO, RegisterPatientDTO.class);
         return "Patient Registered: " + registeredPatient.toString();
     }
 
