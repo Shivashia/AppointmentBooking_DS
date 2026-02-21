@@ -54,7 +54,7 @@ public class PatientService {
         }
     }
 
-    public List<AppointmentDetailsDTO> getPatientAppointments(int id, String token) {
+    public List<AppointmentDetailsDTO> getPatientAppointments(String email, String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -62,7 +62,7 @@ public class PatientService {
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
         ResponseEntity<AppointmentDetailsDTO[]> response = restTemplate.exchange(
-                appointmentServiceURL + "/appointments/getPatientAppointment/" + id,
+                appointmentServiceURL + "/appointments/getPatientAppointment/" + email,
                 HttpMethod.GET,
                 requestEntity,
                 AppointmentDetailsDTO[].class

@@ -2,6 +2,7 @@ package com.DevUp.NotificationService.Listener;
 
 import com.DevUp.NotificationService.DTO.DoctorDTO;
 import com.DevUp.NotificationService.DTO.PatientDTO;
+import com.DevUp.NotificationService.DTO.UserDetailsDTO;
 import com.DevUp.NotificationService.Service.EmailService;
 import com.DevUp.NotificationService.Util.EmailTemplateRenderer;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,6 +47,8 @@ public class AppointmentEventListener {
     private String patientServiceUrl;
 
 
+    private String userServiceUrl="http://USER-SERVICE";
+
 
     @JmsListener(destination = "appointment.queue")
     public void handleAppointmentEvent(String message) {
@@ -76,8 +79,8 @@ public class AppointmentEventListener {
 
 
     private void notifyDoctor(AppointmentEvent event, String serviceAuthToken) {
-        PatientDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
-        DoctorDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
+        UserDetailsDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
+        UserDetailsDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
         String subject = "New Appointment Request";
         String appointmentTime = event.getAppointmentDateTime() != null
                 ? event.getAppointmentDateTime().format(dateTimeFormatter)
@@ -94,8 +97,8 @@ public class AppointmentEventListener {
 
 
     private void notifyPatientApproval(AppointmentEvent event, String serviceAuthToken) {
-        PatientDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
-        DoctorDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
+        UserDetailsDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
+        UserDetailsDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
         String subject = "Appointment Approved";
         String appointmentTime = event.getAppointmentDateTime() != null
                 ? event.getAppointmentDateTime().format(dateTimeFormatter)
@@ -107,8 +110,10 @@ public class AppointmentEventListener {
     }
 
     private void notifyPatientRejection(AppointmentEvent event, String serviceAuthToken) {
-        PatientDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
-        DoctorDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
+        UserDetailsDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
+        UserDetailsDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
+
+
         String subject = "Appointment Rejected";
         String appointmentTime = event.getAppointmentDateTime() != null
                 ? event.getAppointmentDateTime().format(dateTimeFormatter)
@@ -119,38 +124,40 @@ public class AppointmentEventListener {
         log.info("HTML email sent to patient {} for rejection.", p_details.getEmail());
     }
 
-    private DoctorDTO getDoctorDetails(int doctorId, String token) {
+    private UserDetailsDTO getDoctorDetails(int doctorId, String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
         HttpEntity<Void> request = new HttpEntity<>(headers);
 
-        ResponseEntity<DoctorDTO> doctorResponse = restTemplate.exchange(
-                doctorServiceUrl + "/doctor/" + doctorId,
+        ResponseEntity<UserDetailsDTO> response = restTemplate.exchange(
+                userServiceUrl + "/auth/id/" + doctorId,
                 HttpMethod.GET,
                 request,
-                DoctorDTO.class
+                UserDetailsDTO.class
         );
 
-        if (doctorResponse.getBody() != null) {
-            return doctorResponse.getBody();
+
+        if (response.getBody() != null) {
+            return response.getBody();
         }
         throw new RuntimeException("Doctor email not found for ID: " + doctorId);
     }
 
-    private PatientDTO getPatientDetails(int patientId, String token) {
+    private UserDetailsDTO getPatientDetails(int patientId, String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(token);
         HttpEntity<Void> request = new HttpEntity<>(headers);
 
-        ResponseEntity<PatientDTO> patientResponse = restTemplate.exchange(
-                patientServiceUrl + "/patient/" + patientId,
+        ResponseEntity<UserDetailsDTO> response = restTemplate.exchange(
+                userServiceUrl + "/auth/id/" + patientId,
                 HttpMethod.GET,
                 request,
-                PatientDTO.class
+                UserDetailsDTO.class
         );
 
-        if (patientResponse.getBody() != null) {
-            return patientResponse.getBody();
+
+        if (response.getBody() != null) {
+            return response.getBody();
         }
         throw new RuntimeException("Patient email not found for ID: " + patientId);
     }

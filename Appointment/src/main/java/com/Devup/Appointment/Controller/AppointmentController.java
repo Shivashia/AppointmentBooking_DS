@@ -3,22 +3,26 @@ package com.Devup.Appointment.Controller;
 import com.Devup.Appointment.DTO.*;
 import com.Devup.Appointment.Entity.Appointment;
 import com.Devup.Appointment.Entity.AppointmentStatus;
+import com.Devup.Appointment.Entity.OutboxEvent;
 import com.Devup.Appointment.Repository.AppointmentRepository;
 
+import com.Devup.Appointment.Repository.OutboxEventRepository;
 import com.Devup.Appointment.Service.AppointmentEvent;
 import com.Devup.Appointment.Service.AppointmentEventPublisher;
 import com.Devup.Appointment.Service.AppointmentServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import javax.annotation.PostConstruct;
+import java.util.*;
 
 import java.util.stream.Collectors;
 
@@ -27,42 +31,55 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AppointmentController {
 
-    private final AppointmentRepository appointmentRepository;
-    private final RestTemplate restTemplate;
-
     @Value("${doctor.service.url:http://DOCTOR-SERVICE}")
     private String doctorServiceUrl;
 
     @Value("${patient.service.url:http://PATIENT-SERVICE}")
     private String patientServiceUrl;
 
-    @Autowired
-    private AppointmentServiceImpl appointmentService;
 
-    @Autowired
-    private AppointmentEventPublisher eventPublisher;
+//    @Autowired
+    private  final AppointmentRepository appointmentRepository;
 
+//    @Autowired
+    private  final RestTemplate restTemplate;
+
+//    @Autowired
+    private final AppointmentServiceImpl appointmentService;
+
+//    @Autowired
+    private final AppointmentEventPublisher eventPublisher;
+
+//    @Autowired
+    private final OutboxEventRepository outboxEventRepository;
+
+    private static final String THIS_COMPONENT_NAME=AppointmentController.class.getName();
+
+    @PostConstruct
+    public void debug() {
+        System.out.println("Controller loaded: " + this.getClass());
+        System.out.println("Injected service: " + appointmentService);
+    }
 
     @PostMapping("/register")
-    public ResponseEntity<Appointment> createAppointment(@RequestBody AppointmentRequestDTO dto ,@RequestHeader("Authorization") String authHeader) {
+//    @Transactional
+    public ResponseEntity<Appointment> createAppointment(@RequestBody AppointmentRequestDTO dto ,@RequestHeader("Authorization") String authHeader) throws JsonProcessingException {
         Appointment appointment = new Appointment();
         appointment.setDoctorId(dto.getDoctorId());
         appointment.setPatientId(dto.getPatientId());
         appointment.setAppointmentDateTime(dto.getAppointmentDateTime());
         appointment.setStatus(AppointmentStatus.PENDING);
-        Appointment saved = appointmentRepository.save(appointment);
+        Appointment saved = appointmentService.createAppointment(appointment);
 
-        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
-
-        // ✅ Publish event with token
-        eventPublisher.sendEvent(new AppointmentEvent(
-                saved.getId(),
-                saved.getDoctorId(),
-                saved.getPatientId(),
-                saved.getStatus().name(),
-                saved.getAppointmentDateTime(),
-                token
-        ));
+        //  Publish event with token
+//        eventPublisher.sendEvent(new AppointmentEvent(
+//                saved.getId(),
+//                saved.getDoctorId(),
+//                saved.getPatientId(),
+//                saved.getStatus().name(),
+//                saved.getAppointmentDateTime(),
+//                token
+//        ));
 
         return ResponseEntity.ok(saved);
 
@@ -149,6 +166,7 @@ public class AppointmentController {
     private List<AppointmentResponseDTO> getPatientAppointments(@PathVariable int id,@RequestHeader("Authorization") String authHeader){
         List<AppointmentResponseDTO> patientApp=new ArrayList<>();
         String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
+        System.out.println("Appointment Controller "+id);
         patientApp=appointmentService.getAppointmentsForPatient(id,token);
         return patientApp;
     }

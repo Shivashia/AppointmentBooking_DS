@@ -116,17 +116,18 @@ public class HomeController {
 
     @PostMapping("/login")
     public String processLogin(@ModelAttribute LoginDTO loginDTO,
-                               @RequestParam String role,
+//                               @RequestParam String role,
                                HttpSession session,
                                Model model) {
         try {
-            JwtResponseDTO jwtResponse = authService.authenticateUser(loginDTO, role);
+            JwtResponseDTO jwtResponse=userServiceClient.loginUser(loginDTO);
+//            JwtResponseDTO jwtResponse = authService.authenticateUser(loginDTO, role);
 
-            // Store token and role in session
             session.setAttribute("TOKEN", jwtResponse.getToken());
             session.setAttribute("ROLE", jwtResponse.getRole());
+            session.setAttribute("LoggedInuUserID",jwtResponse.getId());
 
-
+            System.out.println("Login Done "+jwtResponse.getRole()+"  "+jwtUtil.extractUsername(jwtResponse.getToken())+ jwtResponse.getId());
             if ("DOCTOR".equalsIgnoreCase(jwtResponse.getRole())) {
                 return "redirect:/dashboard/doctor";
             } else {
@@ -160,32 +161,37 @@ public class HomeController {
         System.out.println("Patient email in UI: " + email);
 
         // Get patient info
-        PatientDTO patient = patientService.getPatientByEmail(email, token);
+//        PatientDTO patient = patientService.getPatientByEmail(email, token);
+        UserDetailsDTO patient = userServiceClient.getUserbyEmail(email,token);
+        System.out.println("Patients Dashboard patient  "+ patient.toString());
         model.addAttribute("patient", patient);
 
-        List<DoctorDTO> doctors = doctorService.getAllDoctors(token);
+        List<DoctorDTO> doctors = userServiceClient.getAllDoctors(token);
         model.addAttribute("doctors", doctors);
 
-        // Get raw response from Appointment service
-        List<AppointmentDetailsDTO> rawAppointments = patientService.getPatientAppointments(patient.getId(), token);
+        System.out.println("Doctors  "+ doctors.get(0));
 
-        // Map to UI DTO
+
+        int userId = (int) session.getAttribute("LoggedInuUserID");
+        List<AppointmentDetailsDTO> rawAppointments = userServiceClient.getPatientAppointments(userId, token);
+
+
         List<AppointmentDetailsDTO> appointments = new ArrayList<>();
         for (AppointmentDetailsDTO response : rawAppointments) {
-            // Map doctor
+
             DoctorDTO doctor = new DoctorDTO();
             doctor.setId(response.getDoctor().getId());
             doctor.setName(response.getDoctor().getName());
             doctor.setEmail(response.getDoctor().getEmail());
             doctor.setSpecialization(response.getDoctor().getSpecialization());
 
-            // Map patient
+
             PatientDTO patientDTO = new PatientDTO();
             patientDTO.setId(response.getPatient().getId());
             patientDTO.setName(response.getPatient().getName());
             patientDTO.setEmail(response.getPatient().getEmail());
 
-            // Compose final appointment DTO
+
             AppointmentDetailsDTO dto = new AppointmentDetailsDTO();
             dto.setDoctor(doctor);
             dto.setPatient(patientDTO);
@@ -212,6 +218,7 @@ public class HomeController {
             return "redirect:/login";
         }
 
+        System.out.println(" before BookingDTO call " );
         AppointmentBookingDTO bookingDTO = new AppointmentBookingDTO(doctorId, patientId, appointmentDateTime);
 
         appointmentService.bookAppointment(bookingDTO, token);
@@ -230,11 +237,13 @@ public class HomeController {
         String email = jwtUtil.extractUsername(token);
         System.out.println("Doctor email in UI: " + email);
 
-        DoctorDTO getDoctor=doctorService.getDoctorByEmail(token,email);
+//        DoctorDTO getDoctor=doctorService.getDoctorByEmail(token,email);
+        UserDetailsDTO getDoctor = userServiceClient.getUserbyEmail(email,token);
+        System.out.println("Doctor Dashboard   "+ getDoctor.toString());
         model.addAttribute("doctor",getDoctor);
 
 
-        List<AppointmentDetailsDTO> rawAppointments = doctorService.getDoctorAppointments(getDoctor.getId(), token);
+        List<AppointmentDetailsDTO> rawAppointments = userServiceClient.getDoctorAppointments(getDoctor.getId(), token);
         model.addAttribute("appointments",rawAppointments);
         return "doctor-dashboard";
     }
