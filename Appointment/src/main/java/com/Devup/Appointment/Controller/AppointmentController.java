@@ -3,21 +3,16 @@ package com.Devup.Appointment.Controller;
 import com.Devup.Appointment.DTO.*;
 import com.Devup.Appointment.Entity.Appointment;
 import com.Devup.Appointment.Entity.AppointmentStatus;
-import com.Devup.Appointment.Entity.OutboxEvent;
 import com.Devup.Appointment.Repository.AppointmentRepository;
 
 import com.Devup.Appointment.Repository.OutboxEventRepository;
-import com.Devup.Appointment.Service.AppointmentEvent;
+import com.Devup.Appointment.DTO.AppointmentEvent;
 import com.Devup.Appointment.Service.AppointmentEventPublisher;
 import com.Devup.Appointment.Service.AppointmentServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -69,18 +64,8 @@ public class AppointmentController {
         appointment.setPatientId(dto.getPatientId());
         appointment.setAppointmentDateTime(dto.getAppointmentDateTime());
         appointment.setStatus(AppointmentStatus.PENDING);
-        Appointment saved = appointmentService.createAppointment(appointment);
-
-        //  Publish event with token
-//        eventPublisher.sendEvent(new AppointmentEvent(
-//                saved.getId(),
-//                saved.getDoctorId(),
-//                saved.getPatientId(),
-//                saved.getStatus().name(),
-//                saved.getAppointmentDateTime(),
-//                token
-//        ));
-
+        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
+        Appointment saved = appointmentService.createAppointment(appointment,token);
         return ResponseEntity.ok(saved);
 
     }
@@ -113,15 +98,15 @@ public class AppointmentController {
         appointmentRepository.save(appointment);
 
 
-        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
-        eventPublisher.sendEvent(new AppointmentEvent(
-                appointment.getId(),
-                appointment.getDoctorId(),
-                appointment.getPatientId(),
-                appointment.getStatus().name(),
-                appointment.getAppointmentDateTime(),
-                token
-        ));
+//        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
+//        eventPublisher.sendEvent(new AppointmentEvent(
+//                appointment.getId(),
+//                appointment.getDoctorId(),
+//                appointment.getPatientId(),
+//                appointment.getStatus().name(),
+//                appointment.getAppointmentDateTime(),
+//                token
+//        ));
         return ResponseEntity.ok("Appointment approved");
     }
 
@@ -134,14 +119,14 @@ public class AppointmentController {
         appointmentRepository.save(appointment);
 
         String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
-        eventPublisher.sendEvent(new AppointmentEvent(
-                appointment.getId(),
-                appointment.getDoctorId(),
-                appointment.getPatientId(),
-                appointment.getStatus().name(),
-                appointment.getAppointmentDateTime(),
-                token
-        ));
+//        eventPublisher.sendEvent(new AppointmentEvent(
+//                appointment.getId(),
+//                appointment.getDoctorId(),
+//                appointment.getPatientId(),
+//                appointment.getStatus().name(),
+//                appointment.getAppointmentDateTime(),
+//                token
+//        ));
 
         return ResponseEntity.ok("Appointment rejected");
     }

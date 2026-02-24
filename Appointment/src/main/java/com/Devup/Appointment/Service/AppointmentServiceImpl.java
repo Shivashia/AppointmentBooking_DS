@@ -48,7 +48,7 @@ public class AppointmentServiceImpl {
 
 //    @Override
     @Transactional
-    public Appointment createAppointment(Appointment request) throws JsonProcessingException {
+    public Appointment createAppointment(Appointment request,String token) throws JsonProcessingException {
         Appointment appointment = Appointment.builder()
                 .doctorId(request.getDoctorId())
                 .patientId(request.getPatientId())
@@ -58,15 +58,34 @@ public class AppointmentServiceImpl {
 
 
         Appointment saved = repository.save(appointment);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        HttpEntity<Void> request_tmp = new HttpEntity<>(headers);
+
+        PatientPublicDTO patientPublicDTO = getPatientDetails(appointment.getPatientId(),request_tmp);
+        DoctorPublicDTO doctorPublicDTO = getDoctorDetails(appointment.getDoctorId(),request_tmp);
+
+        AppointmentEvent app_event= new AppointmentEvent();
+        app_event.setDoctorEmail(doctorPublicDTO.getEmail());
+        app_event.setDoctorName(doctorPublicDTO.getName());
+        app_event.setPatientEmail(patientPublicDTO.getEmail());
+        app_event.setPatientName(patientPublicDTO.getName());
+        app_event.setAppointmentDateTime(saved.getAppointmentDateTime());
+        app_event.setAppointmentId(saved.getId());
+        app_event.setStatus(saved.getStatus());
+
+
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        String json = mapper.writeValueAsString(appointment);
+        String json = mapper.writeValueAsString(app_event);
 
         System.out.println("Appointment Controller "+ saved);
 
 
 
-        OutboxEvent event= new OutboxEvent(THIS_COMPONENT_NAME,saved.getId(),"CREATED",json,"NOT_PUBLISHED");
+        OutboxEvent event= new OutboxEvent(THIS_COMPONENT_NAME,saved.getId(),"CREATED",json,"NEW");
         outboxEventRepository.save(event);
         return saved;
     }
@@ -109,33 +128,11 @@ public class AppointmentServiceImpl {
         headers.setBearerAuth(token);
         HttpEntity<Void> request = new HttpEntity<>(headers);
         System.out.println(appointment.toString());
-//        ResponseEntity<PatientDTO> patientResponse = restTemplate.exchange(
-//                patientServiceUrl + "/patient/" + appointment.getPatientId(),
-//                HttpMethod.GET,
-//                request,
-//                PatientDTO.class);
-        ResponseEntity<UserDetailsDTO> response = restTemplate.exchange(
-                userServiceUrl + "/auth/id/" + appointment.getPatientId(),
-                HttpMethod.GET,
-                request,
-                UserDetailsDTO.class
-        );
-        //PatientDTO patientFull = response.getBody();
-        PatientPublicDTO patientDTO = new PatientPublicDTO(response.getBody().getId(), response.getBody().getName(), response.getBody().getEmail());
 
-//        ResponseEntity<DoctorDTO> doctorResponse = restTemplate.exchange(
-//                doctorServiceUrl + "/doctor/" + appointment.getDoctorId(),
-//                HttpMethod.GET,
-//                request,
-//                DoctorDTO.class);
-        ResponseEntity<UserDetailsDTO> response_doc = restTemplate.exchange(
-                userServiceUrl + "/auth/id/" + appointment.getDoctorId(),
-                HttpMethod.GET,
-                request,
-                UserDetailsDTO.class
-        );
-        //DoctorDTO doctorFull = doctorResponse.getBody();
-        DoctorPublicDTO doctorDTO = new DoctorPublicDTO(response_doc.getBody().getId(), response_doc.getBody().getName(), response_doc.getBody().getEmail(), response_doc.getBody().getSpecialization());
+        PatientPublicDTO patientDTO = getPatientDetails(appointment.getPatientId(),request);
+
+
+        DoctorPublicDTO doctorDTO = getDoctorDetails(appointment.getDoctorId(),request);
 
         return new AppointmentResponseDTO(
                 appointment.getId(),
@@ -145,5 +142,35 @@ public class AppointmentServiceImpl {
                 appointment.getStatus()
         );
     }
+
+    public PatientPublicDTO getPatientDetails(int patientId,HttpEntity<Void> request){
+        ResponseEntity<UserDetailsDTO> response = restTemplate.exchange(
+                userServiceUrl + "/auth/id/" + patientId,
+                HttpMethod.GET,
+                request,
+                UserDetailsDTO.class
+        );
+        //PatientDTO patientFull = response.getBody();
+        PatientPublicDTO patientDTO = new PatientPublicDTO(response.getBody().getId(), response.getBody().getName(), response.getBody().getEmail());
+        return patientDTO;
+    }
+
+    public DoctorPublicDTO getDoctorDetails(int doctorId,HttpEntity<Void> request){
+        ResponseEntity<UserDetailsDTO> response_doc = restTemplate.exchange(
+                userServiceUrl + "/auth/id/" + doctorId,
+                HttpMethod.GET,
+                request,
+                UserDetailsDTO.class
+        );
+        //DoctorDTO doctorFull = doctorResponse.getBody();
+        DoctorPublicDTO doctorDTO = new DoctorPublicDTO(response_doc.getBody().getId(), response_doc.getBody().getName(), response_doc.getBody().getEmail(), response_doc.getBody().getSpecialization());
+        return doctorDTO;
+    }
+
+
+
+
+
+
 
 }

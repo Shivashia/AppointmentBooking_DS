@@ -1,7 +1,7 @@
 package com.Devup.Appointment.Service;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.Devup.Appointment.DTO.AppointmentEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;

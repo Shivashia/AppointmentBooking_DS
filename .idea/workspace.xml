@@ -6,22 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="f9e89cee-dba1-461e-ab2b-714001910963" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Appointment/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/AppointmentApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/AppointmentApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Controller/AppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Controller/AppointmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Entity/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Entity/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Service/AppointmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Service/AppointmentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Entity/OutboxEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Entity/OutboxEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Repository/OutboxEventRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Repository/OutboxEventRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Service/AppointmentEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Service/AppointmentEventPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Service/AppointmentEventPublisher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Service/AppointmentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appointment/src/main/java/com/Devup/Appointment/Service/AppointmentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Config/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Config/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/DTO/JwtResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/DTO/JwtResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/DTO/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/DTO/LoginDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Service/PatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Service/PatientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Service/UserServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/DoctorUp/src/main/java/com/DevUp/DoctorUp/Service/UserServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NotificationService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Listener/AppointmentEventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/Devup/UserService/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/Devup/UserService/Config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/Devup/UserService/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/Devup/UserService/Controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserService/src/main/java/com/Devup/UserService/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserService/src/main/java/com/Devup/UserService/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/src/main/java/com/DevUp/NotificationService/Service/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NotificationService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/NotificationService/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +92,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.AppointmentApplication">
+  <component name="RunManager" selected="Application.NotificationServiceApplication">
     <configuration name="AppointmentApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.Devup.Appointment.AppointmentApplication" />
       <module name="Appointment" />
@@ -164,11 +160,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.NotificationServiceApplication" />
         <item itemvalue="Application.AppointmentApplication" />
-        <item itemvalue="Application.DoctorUpApplication" />
         <item itemvalue="Application.UserServiceApplication" />
         <item itemvalue="Application.EurekaServerApplication" />
-        <item itemvalue="Application.NotificationServiceApplication" />
+        <item itemvalue="Application.DoctorUpApplication" />
       </list>
     </recent_temporary>
   </component>

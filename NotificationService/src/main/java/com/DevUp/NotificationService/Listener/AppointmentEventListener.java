@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -55,17 +56,23 @@ public class AppointmentEventListener {
         try {
             AppointmentEvent event = objectMapper.readValue(message, AppointmentEvent.class);
             log.info("Received Appointment Event: {}", event);
-            String token = event.getToken();
 
-            switch (event.getStatus()) {
+            try{
+                emailService.logNotification(event);
+            }catch (DataIntegrityViolationException e){
+
+            }
+
+
+            switch (event.getStatus().toString()) {
                 case "PENDING":
-                    notifyDoctor(event,token);
+                    notifyDoctor(event);
                     break;
                 case "APPROVED":
-                    notifyPatientApproval(event,token);
+                    notifyPatientApproval(event);
                     break;
                 case "REJECTED":
-                    notifyPatientRejection(event,token);
+                    notifyPatientRejection(event);
                     break;
                 default:
                     log.warn("Unknown event status: {}", event.getStatus());
@@ -78,89 +85,89 @@ public class AppointmentEventListener {
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy 'at' hh:mm a");
 
 
-    private void notifyDoctor(AppointmentEvent event, String serviceAuthToken) {
-        UserDetailsDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
-        UserDetailsDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
+    private void notifyDoctor(AppointmentEvent event) {
+        //UserDetailsDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
+        //UserDetailsDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
         String subject = "New Appointment Request";
         String appointmentTime = event.getAppointmentDateTime() != null
                 ? event.getAppointmentDateTime().format(dateTimeFormatter)
                 : "N/A";
-        String body_doc = buildNewAppointmentHtmlDoc(d_details.getName(), p_details.getName(), appointmentTime);
+        String body_doc = buildNewAppointmentHtmlDoc(event.getDoctorName(), event.getPatientName(), appointmentTime);
 
-        String body_patient = buildNewAppointmentHtmlPatient(d_details.getName(), p_details.getName(), appointmentTime);
-
-        emailService.sendEmailHtml(d_details.getEmail(), subject, body_doc);
-        emailService.sendEmailHtml(p_details.getEmail(), subject, body_patient);
-        log.info("HTML email sent to doctor {} for pending appointment.", d_details.getEmail());
+        String body_patient = buildNewAppointmentHtmlPatient(event.getDoctorName(), event.getPatientName(), appointmentTime);
+        System.out.println(event.getDoctorEmail()+"  "+event.getPatientEmail());
+        emailService.sendEmailHtml(event.getDoctorEmail(), subject, body_doc);
+        emailService.sendEmailHtml(event.getPatientEmail(), subject, body_patient);
+        log.info("HTML email sent to doctor {} for pending appointment.", event.getDoctorEmail());
     }
 
 
 
-    private void notifyPatientApproval(AppointmentEvent event, String serviceAuthToken) {
-        UserDetailsDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
-        UserDetailsDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
+    private void notifyPatientApproval(AppointmentEvent event) {
+        //UserDetailsDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
+        //UserDetailsDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
         String subject = "Appointment Approved";
         String appointmentTime = event.getAppointmentDateTime() != null
                 ? event.getAppointmentDateTime().format(dateTimeFormatter)
                 : "N/A";
-        String body = buildAppointmentApprovedHtml( d_details.getName(),p_details.getName(), appointmentTime);
+        String body = buildAppointmentApprovedHtml( event.getDoctorName(), event.getPatientName(), appointmentTime);
 
-        emailService.sendEmailHtml(p_details.getEmail(), subject, body);
-        log.info("HTML email sent to patient {} for approval.", p_details.getEmail());
+        emailService.sendEmailHtml(event.getPatientEmail(), subject, body);
+        log.info("HTML email sent to patient {} for approval.", event.getPatientEmail());
     }
 
-    private void notifyPatientRejection(AppointmentEvent event, String serviceAuthToken) {
-        UserDetailsDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
-        UserDetailsDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
+    private void notifyPatientRejection(AppointmentEvent event) {
+        //UserDetailsDTO p_details = getPatientDetails(event.getPatientId(), serviceAuthToken);
+        //UserDetailsDTO d_details = getDoctorDetails(event.getDoctorId(), serviceAuthToken);
 
 
         String subject = "Appointment Rejected";
         String appointmentTime = event.getAppointmentDateTime() != null
                 ? event.getAppointmentDateTime().format(dateTimeFormatter)
                 : "N/A";
-        String body = buildAppointmentRejectedHtml( d_details.getName(),p_details.getName(), appointmentTime);
+        String body = buildAppointmentRejectedHtml( event.getDoctorName(), event.getPatientName(), appointmentTime);
 
-        emailService.sendEmailHtml(p_details.getEmail(), subject, body);
-        log.info("HTML email sent to patient {} for rejection.", p_details.getEmail());
+        emailService.sendEmailHtml(event.getPatientEmail(), subject, body);
+        log.info("HTML email sent to patient {} for rejection.", event.getPatientEmail());
     }
 
-    private UserDetailsDTO getDoctorDetails(int doctorId, String token) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(token);
-        HttpEntity<Void> request = new HttpEntity<>(headers);
-
-        ResponseEntity<UserDetailsDTO> response = restTemplate.exchange(
-                userServiceUrl + "/auth/id/" + doctorId,
-                HttpMethod.GET,
-                request,
-                UserDetailsDTO.class
-        );
-
-
-        if (response.getBody() != null) {
-            return response.getBody();
-        }
-        throw new RuntimeException("Doctor email not found for ID: " + doctorId);
-    }
-
-    private UserDetailsDTO getPatientDetails(int patientId, String token) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(token);
-        HttpEntity<Void> request = new HttpEntity<>(headers);
-
-        ResponseEntity<UserDetailsDTO> response = restTemplate.exchange(
-                userServiceUrl + "/auth/id/" + patientId,
-                HttpMethod.GET,
-                request,
-                UserDetailsDTO.class
-        );
-
-
-        if (response.getBody() != null) {
-            return response.getBody();
-        }
-        throw new RuntimeException("Patient email not found for ID: " + patientId);
-    }
+//    private UserDetailsDTO getDoctorDetails(int doctorId, String token) {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setBearerAuth(token);
+//        HttpEntity<Void> request = new HttpEntity<>(headers);
+//
+//        ResponseEntity<UserDetailsDTO> response = restTemplate.exchange(
+//                userServiceUrl + "/auth/id/" + doctorId,
+//                HttpMethod.GET,
+//                request,
+//                UserDetailsDTO.class
+//        );
+//
+//
+//        if (response.getBody() != null) {
+//            return response.getBody();
+//        }
+//        throw new RuntimeException("Doctor email not found for ID: " + doctorId);
+//    }
+//
+//    private UserDetailsDTO getPatientDetails(int patientId, String token) {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setBearerAuth(token);
+//        HttpEntity<Void> request = new HttpEntity<>(headers);
+//
+//        ResponseEntity<UserDetailsDTO> response = restTemplate.exchange(
+//                userServiceUrl + "/auth/id/" + patientId,
+//                HttpMethod.GET,
+//                request,
+//                UserDetailsDTO.class
+//        );
+//
+//
+//        if (response.getBody() != null) {
+//            return response.getBody();
+//        }
+//        throw new RuntimeException("Patient email not found for ID: " + patientId);
+//    }
 
 
 

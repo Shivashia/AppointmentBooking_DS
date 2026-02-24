@@ -1,5 +1,6 @@
 package com.DevUp.NotificationService.Listener;
 
+import com.DevUp.NotificationService.DTO.AppointmentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppointmentEvent implements Serializable {
-    private int appointmentId;
-    private int doctorId;
-    private int patientId;
-    private String status;  // PENDING, APPROVED, REJECTED
+//    private int id;
+    private String doctorName;
+    private String  patientName;
+    private String doctorEmail;
+    private String patientEmail;
+    private AppointmentStatus status;  // PENDING, APPROVED, REJECTED
     private LocalDateTime appointmentDateTime;
-    private String token;
+    private int appointmentId;
+    //private String token;
+
+
 }

@@ -49,4 +49,74 @@ public class OutboxEvent {
     }
 
     // getters & setters
+
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getAggregateType() {
+        return aggregateType;
+    }
+
+    public void setAggregateType(String aggregateType) {
+        this.aggregateType = aggregateType;
+    }
+
+    public int getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "OutboxEvent{" +
+                "id=" + id +
+                ", aggregateType='" + aggregateType + '\'' +
+                ", appointmentId=" + appointmentId +
+                ", eventType='" + eventType + '\'' +
+                ", payload='" + payload + '\'' +
+                ", status='" + status + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

@@ -1,5 +1,8 @@
 package com.DevUp.NotificationService.Service;
 
+import com.DevUp.NotificationService.Entity.Notification;
+import com.DevUp.NotificationService.Listener.AppointmentEvent;
+import com.DevUp.NotificationService.Repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -8,9 +11,14 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
 
 @Service
 public class EmailService {
+
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -36,5 +44,16 @@ public class EmailService {
         } catch (MessagingException e) {
             throw new RuntimeException("Failed to send HTML email", e);
         }
+    }
+
+    public void logNotification(AppointmentEvent event){
+        if(notificationRepository.existsByAppointmentId(event.getAppointmentId())){
+            return;
+        }
+        Notification new_notification= new Notification();
+        new_notification.setAppointmentId(event.getAppointmentId());
+        new_notification.setStatus("PENDING");
+        new_notification.setCreatedAt(LocalDateTime.now());
+        notificationRepository.save(new_notification);
     }
 }
