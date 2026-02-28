@@ -4,7 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f9e89cee-dba1-461e-ab2b-714001910963" name="Changes" comment="" />
+    <list default="true" id="f9e89cee-dba1-461e-ab2b-714001910963" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/Config/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/Config/InvalidCredentialsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/Config/JwtAuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/Config/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/Config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/Controller/DoctorController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/DTO/DoctorDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/DTO/DoctorRegisterDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/DTO/JwtResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/DTO/LoginDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/DoctorApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/Entity/Doctor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/Repository/DoctorRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/java/com/Devup/Doctor/Service/DoctorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Doctor/src/test/java/com/Devup/Doctor/DoctorApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/Controller/PatientController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/DTO/JwtResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/DTO/LoginDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/DTO/PatientDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/DTO/PatientRegisterDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/Entity/Patient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/PatientApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/Repository/PatientRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/Service/PatientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/config/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/config/InvalidCredentialsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/config/JwtAuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/config/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/java/com/Devup/Patient/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Patient/src/test/java/com/Devup/Patient/PatientApplicationTests.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
